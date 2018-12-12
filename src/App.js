@@ -1,28 +1,79 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import SwipeableViews from 'react-swipeable-views';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
-class App extends Component {
-  render() {
+function TabContainer({ children, dir }) {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+            {children}
+        </Typography>
     );
-  }
 }
 
-export default App;
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired,
+    dir: PropTypes.string.isRequired,
+};
+
+const styles = theme => ({
+    root: {
+        backgroundColor: theme.palette.background.paper,
+        width: 500,
+    },
+});
+
+class FullWidthTabs extends React.Component {
+    state = {
+        value: 0,
+    };
+
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
+
+    handleChangeIndex = index => {
+        this.setState({ value: index });
+    };
+
+    render() {
+        const { theme } = this.props;
+
+        return (
+            <div className='App'>
+                <AppBar position="static" color="default">
+                    <Tabs
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        fullWidth
+                    >
+                        <Tab label="Shop" />
+                        <Tab label="Garden" />
+                    </Tabs>
+                </AppBar>
+                <SwipeableViews
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={this.state.value}
+                    onChangeIndex={this.handleChangeIndex}
+                >
+                    <TabContainer dir={theme.direction}>Shop</TabContainer>
+                    <TabContainer dir={theme.direction}>Garden</TabContainer>
+                </SwipeableViews>
+                </div>
+
+        );
+    }
+}
+
+FullWidthTabs.propTypes = {
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(FullWidthTabs);
