@@ -1,0 +1,19 @@
+{
+  "money": 5,
+  "flowersInTheGarden": 0,
+  "flowers": [
+    {
+      "id": 1,
+      "name": "Gartensia"
+    },
+    {
+      "id": 2,
+      "name": "Tulip"
+    },
+    {
+      "id": 2,
+      "name": "Rose"
+    }
+  ],
+  "flowersUserHas": 0
+}

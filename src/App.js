@@ -1,18 +1,88 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import {connect} from "react-redux";
+import Paper from "@material-ui/core/es/Paper/Paper";
+import MenuList from "@material-ui/core/es/MenuList/MenuList";
+import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
 
-function TabContainer({ children, dir }) {
+function TabContainer({children}) {
     return (
-        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+        <div style={{background: '#fff', width: '50%', padding: 8 * 3}}>
             {children}
-        </Typography>
+        </div>
     );
+}
+
+
+class Game extends React.Component {
+    state = {
+        value: 0,
+    };
+
+    handleChange = (event, value) => {
+        this.setState({value});
+    };
+
+    handleChangeIndex = index => {
+        this.setState({value: index});
+    };
+
+    render() {
+        return (
+            <div className='App'>
+                <AppBar position="static" color="default">
+                    <Tabs
+                        onChange={this.handleChange}
+                        indicatorColor="primary"
+                        textColor="primary"
+                        fullWidth
+                    >
+                        <Tab label="Shop"/>
+                        <Tab label="Garden"/>
+                    </Tabs>
+                </AppBar>
+                <SwipeableViews
+                    index={this.state.value}
+                    onChangeIndex={this.handleChangeIndex}
+                >
+                    <TabContainer>
+                        <div>This is Shop</div>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent:'space-between'
+                        }}>
+                            <Paper style={{
+                                margin: 10,
+                                background: '#5799DE',
+                                width: 150,
+                                height: 50,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }} elevation={1}>
+                                <div>Money you have:</div>
+                                <div>${this.props.money}</div>
+                            </Paper>
+                            <MenuList style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+                                List of Flowers available
+                                {this.props.flowers.map((item) => {
+                                    return <MenuItem
+                                        key={item.id}>{item.name}</MenuItem>
+                                })}
+                            </MenuList>
+                        </div>
+                    </TabContainer>
+                    <TabContainer>Garden</TabContainer>
+                </SwipeableViews>
+            </div>
+
+        );
+    }
 }
 
 TabContainer.propTypes = {
@@ -20,60 +90,18 @@ TabContainer.propTypes = {
     dir: PropTypes.string.isRequired,
 };
 
-const styles = theme => ({
-    root: {
-        backgroundColor: theme.palette.background.paper,
-        width: 500,
-    },
-});
-
-class FullWidthTabs extends React.Component {
-    state = {
-        value: 0,
-    };
-
-    handleChange = (event, value) => {
-        this.setState({ value });
-    };
-
-    handleChangeIndex = index => {
-        this.setState({ value: index });
-    };
-
-    render() {
-        const { theme } = this.props;
-
-        return (
-            <div className='App'>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        fullWidth
-                    >
-                        <Tab label="Shop" />
-                        <Tab label="Garden" />
-                    </Tabs>
-                </AppBar>
-                <SwipeableViews
-                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                    index={this.state.value}
-                    onChangeIndex={this.handleChangeIndex}
-                >
-                    <TabContainer dir={theme.direction}>Shop</TabContainer>
-                    <TabContainer dir={theme.direction}>Garden</TabContainer>
-                </SwipeableViews>
-                </div>
-
-        );
-    }
-}
-
-FullWidthTabs.propTypes = {
+Game.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+const mapStateToProps = (state) => {
+    return ({
+        money: state.money,
+        flowers: state.flowers
+    });
+};
+
+export default connect(
+    mapStateToProps,
+)(Game);
