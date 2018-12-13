@@ -5,11 +5,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {connect} from "react-redux";
-import Paper from "@material-ui/core/es/Paper/Paper";
 import MenuList from "@material-ui/core/es/MenuList/MenuList";
 import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import Badge from "@material-ui/core/es/Badge/Badge";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 function TabContainer({children}) {
     return (
@@ -35,7 +37,7 @@ class Game extends React.Component {
             money: this.props.money,
             flowers: this.props.flowers,
             flowersInTheShop: this.props.flowersInTheShop,
-
+            cartNum:0
         };
 
 
@@ -58,7 +60,7 @@ class Game extends React.Component {
     handleAddFlower = () => {
         let newAmountOfMoney = this.state.money !== 0 ? (this.state.flowersInTheShop !==0 ?this.state.money - 1: this.state.money) : 0 ;
         let newNumberOfFlowersAvailable = this.state.money !== 0 ?  (this.state.flowersInTheShop !==0 ? this.state.flowersInTheShop - 1: 0): this.state.flowersInTheShop;
-        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable});
+        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable,cartNum:((this.props.flowersInTheShop - this.state.flowersInTheShop)+1) });
     };
 
     handleChangeIndex = index => {
@@ -67,8 +69,12 @@ class Game extends React.Component {
 
     renderWarning=()=>{
         let warning = this.state.money == 0 ? <div style={{color:'red'}}>No money left on your account</div>:
-            (this.state.flowersInTheShop == 0 ? <div style={{color:'red'}}>Sorry, no flowers left in our shop</div>:<div/>)
+            (this.state.flowersInTheShop == 0 ? <div style={{color:'red'}}>Sorry, no flowers left in our shop</div>:<div/>);
         return warning
+    };
+
+    handleCart=()=>{
+
     };
 
     render() {
@@ -90,7 +96,11 @@ class Game extends React.Component {
                     onChangeIndex={this.handleChangeIndex}
                 >
                     <TabContainer >
-                        <h1 style={{color:'#616161'}}>This is Shop</h1>
+                        <h1 style={{color:'#616161'}}>This is Shop<IconButton aria-label="Cart">
+                            <Badge badgeContent={this.state.cartNum} color="secondary">
+                                <ShoppingCartIcon />
+                            </Badge>
+                        </IconButton></h1>
                             <Chip
                                 avatar={<Avatar>{this.state.money + 'Kč'}</Avatar>}
                                 label="Your account"
