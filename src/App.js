@@ -19,13 +19,44 @@ function TabContainer({children}) {
 
 
 class Game extends React.Component {
-    state = {
-        value: 0,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: 0,
+            money: this.props.money,
+            flowers: this.props.flowers,
+            flowersInTheShop: this.props.flowersInTheShop,
+            isFlowersDisabled: null
+        };
+        this.checkAmountOfMoney.bind(this);
+
+    }
+
 
     handleChange = (event, value) => {
         this.setState({value});
     };
+
+    componentDidUpdate(prevState) {
+        if (this.prevState.flowersInTheShop !== undefined && this.prevState.flowersInTheShop !== this.state.flowersInTheShop) {
+            if (this.state.flowersInTheShop == 0) {
+                return 0
+            }
+        }
+    }
+
+    checkAmountOfMoney = () => {
+        let aa = this.state.money === 0 ? this.setState({isFlowersDisabled: true}) : this.state.isFlowersDisabled
+
+    };
+
+    handleAddFlower = () => {
+        let newAmountOfMoney = this.state.money - 1;
+        let newNumberOfFlowersAvailable = this.state.flowersInTheShop - 1;
+        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable});
+        this.checkAmountOfMoney();
+    };
+
 
     handleChangeIndex = index => {
         this.setState({value: index});
@@ -54,9 +85,9 @@ class Game extends React.Component {
                         <div style={{
                             display: 'flex',
                             flexDirection: 'row',
-                            justifyContent:'space-between'
+                            justifyContent: 'space-between'
                         }}>
-                            <Paper style={{
+                            <Paper disabled={this.state.isFlowersDisabled} style={{
                                 margin: 10,
                                 background: '#5799DE',
                                 width: 150,
@@ -66,12 +97,26 @@ class Game extends React.Component {
                                 justifyContent: 'center'
                             }} elevation={1}>
                                 <div>Money you have:</div>
-                                <div>${this.props.money}</div>
+                                <div>${this.state.money}</div>
                             </Paper>
-                            <MenuList style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+                            <Paper style={{
+                                margin: 10,
+                                background: '#5799DE',
+                                width: 150,
+                                height: 50,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }} elevation={1}>
+                                <div>Flowers available:</div>
+                                <div>{this.state.flowersInTheShop}</div>
+                            </Paper>
+                            <MenuList
+                                style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
                                 List of Flowers available
-                                {this.props.flowers.map((item) => {
+                                {this.state.flowers.map((item) => {
                                     return <MenuItem
+                                        onClick={this.handleAddFlower}
                                         key={item.id}>{item.name}</MenuItem>
                                 })}
                             </MenuList>
@@ -98,7 +143,8 @@ Game.propTypes = {
 const mapStateToProps = (state) => {
     return ({
         money: state.money,
-        flowers: state.flowers
+        flowers: state.flowers,
+        flowersInTheShop: state.flowersInTheShop
     });
 };
 
