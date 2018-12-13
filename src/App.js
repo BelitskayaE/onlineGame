@@ -8,10 +8,19 @@ import {connect} from "react-redux";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import MenuList from "@material-ui/core/es/MenuList/MenuList";
 import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
+import Chip from "@material-ui/core/es/Chip/Chip";
+import Avatar from "@material-ui/core/es/Avatar/Avatar";
 
 function TabContainer({children}) {
     return (
-        <div style={{background: '#fff', width: '50%', padding: 8 * 3}}>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems:'center',
+            width:'50%',
+            padding:10
+        }}>
             {children}
         </div>
     );
@@ -26,7 +35,7 @@ class Game extends React.Component {
             money: this.props.money,
             flowers: this.props.flowers,
             flowersInTheShop: this.props.flowersInTheShop,
-            isFlowersDisabled: null
+
         };
 
 
@@ -47,14 +56,19 @@ class Game extends React.Component {
 
 
     handleAddFlower = () => {
-        let newAmountOfMoney = this.state.money !== 0 ? this.state.money - 1 : 0 ;
-        let newNumberOfFlowersAvailable = this.state.money !== 0 ?  this.state.flowersInTheShop - 1: this.state.flowersInTheShop;
+        let newAmountOfMoney = this.state.money !== 0 ? (this.state.flowersInTheShop !==0 ?this.state.money - 1: this.state.money) : 0 ;
+        let newNumberOfFlowersAvailable = this.state.money !== 0 ?  (this.state.flowersInTheShop !==0 ? this.state.flowersInTheShop - 1: 0): this.state.flowersInTheShop;
         this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable});
     };
 
-
     handleChangeIndex = index => {
         this.setState({value: index});
+    };
+
+    renderWarning=()=>{
+        let warning = this.state.money == 0 ? <div style={{color:'red'}}>No money left on your account</div>:
+            (this.state.flowersInTheShop == 0 ? <div style={{color:'red'}}>Sorry, no flowers left in our shop</div>:<div/>)
+        return warning
     };
 
     render() {
@@ -75,48 +89,34 @@ class Game extends React.Component {
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
                 >
-                    <TabContainer>
-                        <div>This is Shop</div>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Paper disabled={this.state.isFlowersDisabled} style={{
-                                margin: 10,
+                    <TabContainer >
+                        <h1 style={{color:'#616161'}}>This is Shop</h1>
+                            <Chip
+                                avatar={<Avatar>{this.state.money + 'Kč'}</Avatar>}
+                                label="Your account"
+                                variant="outlined"
+                                style={{
+                                    margin:10
+                            }} >
+                            </Chip>
+                            <Chip
+                                avatar={<Avatar>{this.state.flowersInTheShop}</Avatar>}
+                                label="Flowers available"
+                                variant="outlined"
+                                style={{
                                 background: '#5799DE',
-                                width: 150,
-                                height: 50,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }} elevation={1}>
-                                <div>Money you have:</div>
-                                <div>${this.state.money}</div>
-                            </Paper>
-                            <Paper style={{
-                                margin: 10,
-                                background: '#5799DE',
-                                width: 150,
-                                height: 50,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                            }} elevation={1}>
-                                <div>Flowers available:</div>
-                                <div>{this.state.flowersInTheShop}</div>
-                            </Paper>
-                            <MenuList
-                                style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
-                                List of Flowers available
-                                {this.state.flowers.map((item) => {
-                                    return <MenuItem
-                                        onClick={this.handleAddFlower}
-                                        key={item.id}>{item.name}</MenuItem>
-                                })}
-                            </MenuList>
-                        </div>
-                        {this.state.money == 0 ? <div style={{color:'red'}}>No money left on your account</div>:<div/>}
+                                    margin:10
+                            }} >
+                            </Chip>
+                                <MenuList
+                                    style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+                                    {this.state.flowers.map((item) => {
+                                        return <MenuItem
+                                            onClick={this.handleAddFlower}
+                                            key={item.id}>{item.name}</MenuItem>
+                                    })}
+                                </MenuList>
+                        {this.renderWarning()}
                     </TabContainer>
                     <TabContainer>Garden</TabContainer>
                 </SwipeableViews>

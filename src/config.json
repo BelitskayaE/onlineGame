@@ -1,5 +1,5 @@
 {
-  "money": 5,
+  "money": 8,
   "flowersInTheGarden": 0,
   "flowers": [
     {
@@ -16,5 +16,5 @@
     }
   ],
   "flowersUserHas": 0,
-  "flowersInTheShop": 20
+  "flowersInTheShop": 4
 }
