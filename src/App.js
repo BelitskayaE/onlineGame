@@ -60,7 +60,8 @@ class Game extends React.Component {
     handleAddFlower = () => {
         let newAmountOfMoney = this.state.money !== 0 ? (this.state.flowersInTheShop !==0 ?this.state.money - 1: this.state.money) : 0 ;
         let newNumberOfFlowersAvailable = this.state.money !== 0 ?  (this.state.flowersInTheShop !==0 ? this.state.flowersInTheShop - 1: 0): this.state.flowersInTheShop;
-        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable,cartNum:((this.props.flowersInTheShop - this.state.flowersInTheShop)+1) });
+        let fillCart= this.state.money !== 0 && this.state.flowersInTheShop !== 0 ? this.state.cartNum +1 : this.state.cartNum;
+        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable,cartNum:fillCart });
     };
 
     handleChangeIndex = index => {
@@ -73,9 +74,6 @@ class Game extends React.Component {
         return warning
     };
 
-    handleCart=()=>{
-
-    };
 
     render() {
         return (
