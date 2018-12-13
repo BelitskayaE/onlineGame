@@ -28,7 +28,7 @@ class Game extends React.Component {
             flowersInTheShop: this.props.flowersInTheShop,
             isFlowersDisabled: null
         };
-        this.checkAmountOfMoney.bind(this);
+
 
     }
 
@@ -37,24 +37,19 @@ class Game extends React.Component {
         this.setState({value});
     };
 
-    componentDidUpdate(prevState) {
-        if (this.prevState.flowersInTheShop !== undefined && this.prevState.flowersInTheShop !== this.state.flowersInTheShop) {
-            if (this.state.flowersInTheShop == 0) {
-                return 0
-            }
-        }
-    }
+    // componentDidUpdate(prevState) {
+    //     if (this.prevState.flowersInTheShop !== undefined && this.prevState.flowersInTheShop !== this.state.flowersInTheShop) {
+    //         if (this.state.flowersInTheShop == 0) {
+    //             return 0
+    //         }
+    //     }
+    // }
 
-    checkAmountOfMoney = () => {
-        let aa = this.state.money === 0 ? this.setState({isFlowersDisabled: true}) : this.state.isFlowersDisabled
-
-    };
 
     handleAddFlower = () => {
-        let newAmountOfMoney = this.state.money - 1;
-        let newNumberOfFlowersAvailable = this.state.flowersInTheShop - 1;
+        let newAmountOfMoney = this.state.money !== 0 ? this.state.money - 1 : 0 ;
+        let newNumberOfFlowersAvailable = this.state.money !== 0 ?  this.state.flowersInTheShop - 1: this.state.flowersInTheShop;
         this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable});
-        this.checkAmountOfMoney();
     };
 
 
@@ -121,6 +116,7 @@ class Game extends React.Component {
                                 })}
                             </MenuList>
                         </div>
+                        {this.state.money == 0 ? <div style={{color:'red'}}>No money left on your account</div>:<div/>}
                     </TabContainer>
                     <TabContainer>Garden</TabContainer>
                 </SwipeableViews>
