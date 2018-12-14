@@ -58,10 +58,10 @@ class Game extends React.Component {
         this.setState({value: index});
     };
 
-    renderWarning = () => {
-        let warning = this.props.money === 0 ? <div style={{color: 'red'}}>No money left on your account</div> :
-            (this.props.flowersInTheShop === 0 ? <div style={{color: 'red'}}>Sorry, no flowers left in our shop</div> :
-                <div/>);
+
+    renderWarning=()=>{
+        let warning = this.props.money === 0 ? <div style={{color:'red'}}>No money left on your account</div>:
+            (this.props.flowersInTheShop === 0 ? <div style={{color:'red'}}>Sorry, no flowers left in our shop</div>:<div/>);
         return warning
     };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    growingFlower,
     plantFlower,
     setNewAccountState,
     setNewCartState,
@@ -10,8 +9,15 @@ import {
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import {Flower} from "./Flower";
 import Button from "@material-ui/core/es/Button/Button";
 
+const timer = (value = 60, delay = 1000) => {
+    if (value > 0) {
+        setTimeout(() => timer(value - 1), delay);
+        return {__html: value}
+    }
+};
 
 class Garden extends React.Component {
     constructor(props) {
@@ -21,10 +27,11 @@ class Garden extends React.Component {
 
 
     handlePlantFlower = () => {
-        let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 &&  this.props.plantFlower() : this.props.cartState;
+        let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 : this.props.cartState;
         this.props.setNewCartState(recountCart);
-
+        this.props.plantFlower();
     };
+
 
     render() {
         return (
@@ -48,9 +55,12 @@ class Garden extends React.Component {
                     Plant flower
                 </Button></div>
 
-                <Paper style={{margin: 20, padding: 20, background: 'rgb(97, 132, 60)'}} elevation={1}>
-                    <div>{this.props.growingFlowers.map((item,idx) => {
-                        return <div key={idx}>{item.name}</div>
+                <Paper style={{width: 400, height: 400, margin: 20, padding: 20, background: 'rgb(97, 132, 60)'}}
+                       elevation={1}>
+                    <div>{this.props.growingFlowers.map((item, idx) => {
+                        return <div><Flower key={idx}/>
+                            <div dangerouslySetInnerHTML={timer()}/>
+                        </div>
                     })}</div>
                 </Paper>
             </div>
