@@ -21,9 +21,9 @@ class Garden extends React.Component {
 
 
     handlePlantFlower = () => {
-        let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 : this.props.cartState;
+        let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 &&  this.props.plantFlower() : this.props.cartState;
         this.props.setNewCartState(recountCart);
-        this.props.plantFlower()
+
     };
 
     render() {
