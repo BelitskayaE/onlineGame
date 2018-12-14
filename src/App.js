@@ -12,6 +12,7 @@ import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Badge from "@material-ui/core/es/Badge/Badge";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {addItemToCart, setNewCartState} from "./actions/game-actions";
 
 function TabContainer({children}) {
     return (
@@ -19,9 +20,9 @@ function TabContainer({children}) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            alignItems:'center',
-            width:'50%',
-            padding:10
+            alignItems: 'center',
+            width: '50%',
+            padding: 10
         }}>
             {children}
         </div>
@@ -37,7 +38,7 @@ class Game extends React.Component {
             money: this.props.money,
             flowers: this.props.flowers,
             flowersInTheShop: this.props.flowersInTheShop,
-            cartNum:0
+            cartState: this.props.cartState
         };
 
 
@@ -49,28 +50,33 @@ class Game extends React.Component {
     };
 
     // componentDidUpdate(prevState) {
-    //     if (this.prevState.flowersInTheShop !== undefined && this.prevState.flowersInTheShop !== this.state.flowersInTheShop) {
-    //         if (this.state.flowersInTheShop == 0) {
-    //             return 0
-    //         }
+    //     switch (prevState) {
+    //         case  prevState.cartState !== this.state.cartState:
+    //             this.props.setNewCartState(this.state.cartState)
     //     }
+    //
     // }
 
 
+
+
+
     handleAddFlower = () => {
-        let newAmountOfMoney = this.state.money !== 0 ? (this.state.flowersInTheShop !==0 ?this.state.money - 1: this.state.money) : 0 ;
-        let newNumberOfFlowersAvailable = this.state.money !== 0 ?  (this.state.flowersInTheShop !==0 ? this.state.flowersInTheShop - 1: 0): this.state.flowersInTheShop;
-        let fillCart= this.state.money !== 0 && this.state.flowersInTheShop !== 0 ? this.state.cartNum +1 : this.state.cartNum;
-        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable,cartNum:fillCart });
+        let newAmountOfMoney = this.state.money !== 0 ? (this.state.flowersInTheShop !== 0 ? this.state.money - 1 : this.state.money) : 0;
+        let newNumberOfFlowersAvailable = this.state.money !== 0 ? (this.state.flowersInTheShop !== 0 ? this.state.flowersInTheShop - 1 : 0) : this.state.flowersInTheShop;
+        let fillCart = this.state.money !== 0 && this.state.flowersInTheShop !== 0 ? this.state.cartState + 1 : this.state.cartState;
+        this.setState({money: newAmountOfMoney, flowersInTheShop: newNumberOfFlowersAvailable, cartState: fillCart});
+        setTimeout(this.props.setNewCartState(this.state.cartState),0)
     };
 
     handleChangeIndex = index => {
         this.setState({value: index});
     };
 
-    renderWarning=()=>{
-        let warning = this.state.money == 0 ? <div style={{color:'red'}}>No money left on your account</div>:
-            (this.state.flowersInTheShop == 0 ? <div style={{color:'red'}}>Sorry, no flowers left in our shop</div>:<div/>);
+    renderWarning = () => {
+        let warning = this.state.money == 0 ? <div style={{color: 'red'}}>No money left on your account</div> :
+            (this.state.flowersInTheShop == 0 ? <div style={{color: 'red'}}>Sorry, no flowers left in our shop</div> :
+                <div/>);
         return warning
     };
 
@@ -93,37 +99,37 @@ class Game extends React.Component {
                     index={this.state.value}
                     onChangeIndex={this.handleChangeIndex}
                 >
-                    <TabContainer >
-                        <h1 style={{color:'#616161'}}>This is Shop<IconButton aria-label="Cart">
-                            <Badge badgeContent={this.state.cartNum} color="secondary">
-                                <ShoppingCartIcon />
+                    <TabContainer>
+                        <h1 style={{color: '#616161'}}>This is Shop<IconButton aria-label="Cart">
+                            <Badge badgeContent={this.state.cartState} color="secondary">
+                                <ShoppingCartIcon/>
                             </Badge>
                         </IconButton></h1>
-                            <Chip
-                                avatar={<Avatar>{this.state.money + 'Kč'}</Avatar>}
-                                label="Your account"
-                                variant="outlined"
-                                style={{
-                                    margin:10
-                            }} >
-                            </Chip>
-                            <Chip
-                                avatar={<Avatar>{this.state.flowersInTheShop}</Avatar>}
-                                label="Flowers available"
-                                variant="outlined"
-                                style={{
+                        <Chip
+                            avatar={<Avatar>{this.state.money + 'Kč'}</Avatar>}
+                            label="Your account"
+                            variant="outlined"
+                            style={{
+                                margin: 10
+                            }}>
+                        </Chip>
+                        <Chip
+                            avatar={<Avatar>{this.state.flowersInTheShop}</Avatar>}
+                            label="Flowers available"
+                            variant="outlined"
+                            style={{
                                 background: '#5799DE',
-                                    margin:10
-                            }} >
-                            </Chip>
-                                <MenuList
-                                    style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
-                                    {this.state.flowers.map((item) => {
-                                        return <MenuItem
-                                            onClick={this.handleAddFlower}
-                                            key={item.id}>{item.name}</MenuItem>
-                                    })}
-                                </MenuList>
+                                margin: 10
+                            }}>
+                        </Chip>
+                        <MenuList
+                            style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+                            {this.state.flowers.map((item) => {
+                                return <MenuItem
+                                    onClick={this.handleAddFlower}
+                                    key={item.id}>{item.name}</MenuItem>
+                            })}
+                        </MenuList>
                         {this.renderWarning()}
                     </TabContainer>
                     <TabContainer>Garden</TabContainer>
@@ -148,10 +154,16 @@ const mapStateToProps = (state) => {
     return ({
         money: state.money,
         flowers: state.flowers,
-        flowersInTheShop: state.flowersInTheShop
+        flowersInTheShop: state.flowersInTheShop,
+        cartState: state.cartState
     });
 };
 
+const mapDispatchToProps = dispatch => ({
+    setNewCartState: (value) => dispatch(setNewCartState(value)),
+
+});
 export default connect(
     mapStateToProps,
+    mapDispatchToProps
 )(Game);
