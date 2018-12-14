@@ -7,12 +7,12 @@ import App from './App';
 import reducer from './reducers/game-reducer';
 import * as serviceWorker from './serviceWorker';
 
-/* eslint-disable no-underscore-dangle */
+
 const store = createStore(
-    reducer, /* preloadedState, */
+    reducer,
 
 );
-/* eslint-enable */
+
 
 ReactDOM.render(
     <Provider store={store}>
@@ -20,4 +20,8 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root'),
 );
+
+
+
+
 serviceWorker.unregister();
