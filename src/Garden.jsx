@@ -4,25 +4,23 @@ import {
     plantFlower,
     setNewAccountState,
     setNewCartState,
-    setNewFlowersStateInTheShop
+    setNewFlowersStateInTheShop,
 } from "./actions/game-actions";
+import moment from 'moment';
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import {Flower} from "./Flower";
 import Button from "@material-ui/core/es/Button/Button";
 
-const timer = (value = 60, delay = 1000) => {
-    if (value > 0) {
-        setTimeout(() => timer(value - 1), delay);
-        return {__html: value}
-    }
-};
 
 class Garden extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            timer: null,
+            counter: 0
+        };
     }
 
 
@@ -30,6 +28,16 @@ class Garden extends React.Component {
         let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 : this.props.cartState;
         this.props.setNewCartState(recountCart);
         this.props.plantFlower();
+    };
+
+    az = (value) => {
+        return value >=0  ? this.setState({counter: value}): 0
+
+    };
+
+    timer = (value = 60, delay = 4000) => {
+        let timer = setInterval(this.az(--value), delay);
+        this.setState({timer});
     };
 
 
@@ -59,7 +67,7 @@ class Garden extends React.Component {
                        elevation={1}>
                     <div>{this.props.growingFlowers.map((item, idx) => {
                         return <div><Flower key={idx}/>
-                            <div dangerouslySetInnerHTML={timer()}/>
+                            <div>{this.timer()}</div>
                         </div>
                     })}</div>
                 </Paper>
@@ -85,6 +93,7 @@ const mapDispatchToProps = dispatch => ({
     setNewFlowersStateInTheShop: (value) => dispatch(setNewFlowersStateInTheShop(value)),
     setNewAccountState: (value) => dispatch(setNewAccountState(value)),
     plantFlower: () => dispatch(plantFlower()),
+
 
 });
 export default connect(

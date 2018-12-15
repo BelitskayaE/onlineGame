@@ -68,7 +68,7 @@ class Game extends React.Component {
 
     render() {
         return (
-            <div className='App'>
+            <div style={{background:'#666562'}} className='App'>
                 <AppBar position="static" color="default">
                     <Tabs
                         onChange={this.handleChange}

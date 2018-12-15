@@ -2,7 +2,7 @@ import {
     ADD_TO_CART,
     BUY_FLOWER,
     MONEY_LEFT,
-    GROWING_fLOWER
+    GROWING_fLOWER,
 } from './types';
 
 export const setNewCartState = (data) => ({

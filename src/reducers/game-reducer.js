@@ -10,7 +10,8 @@ const initialState = {
     flowers: data.flowers,
     flowersInTheShop: data.flowersInTheShop,
     cartState: data.cartState,
-    growingFlowers: []
+    growingFlowers: [],
+    timer:0
 
 };
 
