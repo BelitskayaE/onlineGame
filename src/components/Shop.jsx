@@ -37,9 +37,8 @@ class Shop extends React.Component {
 
 
     renderWarning = () => {
-        let warning = this.props.money === 0 ? <div style={{color: 'red'}}>No money left on your account</div> :
-            (this.props.flowersInTheShop === 0 ? <div style={{color: 'red'}}>Sorry, no flowers left in our shop</div> :
-                <div/>);
+        let warning = this.props.money === 0 ? 'No money left on your account' :
+            (this.props.flowersInTheShop === 0 ? 'Sorry, no flowers left in our shop':'');
         return warning
     };
 
@@ -65,7 +64,7 @@ class Shop extends React.Component {
     };
 
     renderFlowers = () => {
-        return <div><Chip
+        return <div className='flowers'><Chip
             avatar={<Avatar>{this.props.flowersInTheShop}</Avatar>}
             label="Flowers available"
             variant="outlined"
@@ -73,8 +72,7 @@ class Shop extends React.Component {
                 background: '#5799DE',
             }}>
         </Chip>
-            <MenuList className='flowers-menu-list'
-                style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'column'}}>
+            <MenuList className='flowers-menu-list'>
                 {this.props.flowersTypes.map((item) => {
                     return <MenuItem
                         onClick={this.handleAddFlower}
@@ -89,17 +87,11 @@ class Shop extends React.Component {
         return (
             <div className='App'>
                 <div className='chip-account'>{this.renderChipAccount()}</div>
-                <div className='content' style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                }}>
+                <div className='content'>
                     <div className='cart'>{this.renderCart()}</div>
                     <h4>Here you can buy some flowers for your garden</h4>
-                    <div className='flowers'>{this.renderFlowers()}</div>
-                    <div className='warning'>  {this.renderWarning()}</div>
+                    {this.renderFlowers()}
+                    <div className='warning'>{this.renderWarning()}</div>
                 </div>
             </div>
 

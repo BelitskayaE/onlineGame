@@ -17,10 +17,7 @@ import Button from "@material-ui/core/es/Button/Button";
 class Garden extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            timer: null,
-            counter: 0
-        };
+
     }
 
 
@@ -38,13 +35,12 @@ class Garden extends React.Component {
 
             };
             return <div style={{margin: 5}}><Flower {...props}/>
-                <div>{idx}</div>
             </div>
         })
     };
 
     renderFlowersCounter = () => {
-        return <div style={{display: 'flex', flexDirection: 'row'}}><Chip
+        return <div className='flowers-counter'><Chip
             avatar={<Avatar>{this.props.cartState}</Avatar>}
             label="Flowers you have"
             variant="outlined"
@@ -58,36 +54,23 @@ class Garden extends React.Component {
     };
 
     renderGardenSquare = () => {
-        return <Paper style={{
-            width: 400,
-            height: 400,
-            margin: 20,
-            padding: 20,
-            background: 'rgb(97, 132, 60)',
-        }}
-                      elevation={1}>
+        return <Paper className='garden-square' style={{background: 'rgb(97, 132, 60)'}} elevation={1}>
             <div>{this.renderPlantedFlowers()}</div>
         </Paper>
     };
 
     render() {
         return (
-            <div className='content' style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '100%',
-            }}>
+            <div className='content'>
                 <p>Here you can plant and grow your flowers.</p>
-                <div className='flowers-counter'>{this.renderFlowersCounter()}</div>
-                <div className='garden-square'>{this.renderGardenSquare()}</div>
+                {this.renderFlowersCounter()}
+                <div className='warning'>{this.props.cartState === 0? 'You have no flowers in the cart':''}</div>
+                {this.renderGardenSquare()}
             </div>
 
         );
     }
 }
-
 
 const mapStateToProps = (state) => {
     return ({

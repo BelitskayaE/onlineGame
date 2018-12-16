@@ -6,7 +6,8 @@ import Tab from '@material-ui/core/Tab';
 import Shop from "./Shop";
 import Garden from "./Garden";
 import '../styles/globalStyle.css';
-import '../styles/shopStyles.css'
+import '../styles/shopStyles.css';
+import '../styles/gardenStyles.css';
 
 function TabContainer({children}) {
     return (
@@ -15,7 +16,6 @@ function TabContainer({children}) {
         </div>
     );
 }
-
 
 class Game extends React.Component {
     constructor(props) {

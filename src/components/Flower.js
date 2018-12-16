@@ -24,6 +24,8 @@ class Flower extends React.Component {
             counter: this.state.counter - 1
         });
     };
+
+
     flower = props => (
         <SvgIcon {...props}>
             <path
@@ -35,7 +37,7 @@ class Flower extends React.Component {
 
     render() {
         return (
-            <div style={{display: 'flex',alignItems:'center',justifyContent:'center'}}>
+            <div className='flex'>
                 <Tooltip title={this.state.counter === 0 ? 'This flower grew up well' : ''} placement="top">
                     <div>{this.flower()}</div>
                 </Tooltip>

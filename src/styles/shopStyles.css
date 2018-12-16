@@ -4,4 +4,7 @@
 
 .flowers-menu-list {
     color: rgba(251, 246, 236, 0.87);
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column
 }
