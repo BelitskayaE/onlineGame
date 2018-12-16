@@ -3,6 +3,7 @@ import {
     BUY_FLOWER,
     MONEY_LEFT,
     GROWING_fLOWER,
+    KILL_FLOWER
 } from './types';
 
 export const setNewCartState = (data) => ({
@@ -20,4 +21,8 @@ export const setNewAccountState = (data) => ({
 });
 export const plantFlower = () => ({
     type: GROWING_fLOWER
+});
+export const killFlower = (idx) => ({
+    type: KILL_FLOWER,
+    idx
 });

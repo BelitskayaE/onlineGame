@@ -1,7 +1,6 @@
 {
-  "money": 8,
-  "flowersInTheGarden": 0,
-  "flowers": [
+  "money": 5,
+  "flowersTypes": [
     {
       "id": 1,
       "name": "Gartensia"
@@ -11,11 +10,14 @@
       "name": "Tulip"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Rose"
+    },
+    {
+      "id": 4,
+      "name": "Mimosa"
     }
   ],
-  "flowersUserHas": 0,
-  "flowersInTheShop": 14,
+  "flowersInTheShop": 10,
   "cartState":0
 }

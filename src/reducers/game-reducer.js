@@ -1,17 +1,15 @@
 import * as data from '../config.json'
 import {
-    ADD_TO_CART, BUY_FLOWER, GROWING_fLOWER,
+    ADD_TO_CART, BUY_FLOWER, GROWING_fLOWER, KILL_FLOWER,
     MONEY_LEFT
 } from '../actions/types';
 
 const initialState = {
     money: data.money,
-    flowersInGarden: data.flowersInTheGarden,
-    flowers: data.flowers,
+    flowersTypes: data.flowersTypes,
     flowersInTheShop: data.flowersInTheShop,
     cartState: data.cartState,
     growingFlowers: [],
-    timer:0
 
 };
 
@@ -45,6 +43,15 @@ const gameReducer = (state = initialState, action) => {
             case GROWING_fLOWER: {
                 const fl = [...state.growingFlowers];
                 fl.push({name: 'flower'});
+                return {
+                    ...state,
+                    growingFlowers: fl
+
+                };
+            }
+            case KILL_FLOWER: {
+                const fl = [...state.growingFlowers];
+                fl.splice(action.idx, 1);
                 return {
                     ...state,
                     growingFlowers: fl
