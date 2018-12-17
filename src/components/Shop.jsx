@@ -22,23 +22,26 @@ class Shop extends React.Component {
     }
 
 
-    dispatchToStore = (newAmountOfMoney, newNumberOfFlowersAvailable, fillCart) => {
+    dispatchToStore = (newAmountOfMoney, newNumberOfFlowersAvailable) => {
         this.props.setNewAccountState(newAmountOfMoney);
-        this.props.setNewCartState(fillCart);
         this.props.setNewFlowersStateInTheShop(newNumberOfFlowersAvailable)
     };
 
-    handleAddFlower = () => {
+    handleAddFlower = (identifyer) => {
         let newAmountOfMoney = this.props.money !== 0 ? (this.props.flowersInTheShop !== 0 ? this.props.money - 1 : this.props.money) : 0;
         let newNumberOfFlowersAvailable = this.props.money !== 0 ? (this.props.flowersInTheShop !== 0 ? this.props.flowersInTheShop - 1 : 0) : this.props.flowersInTheShop;
-        let fillCart = this.props.money !== 0 && this.props.flowersInTheShop !== 0 ? this.props.cartState + 1 : this.props.cartState;
-        this.dispatchToStore(newAmountOfMoney, newNumberOfFlowersAvailable, fillCart)
+        if (this.props.money !== 0 && this.props.flowersInTheShop !== 0) {
+            this.props.cartState.push(identifyer);
+        }
+        //let fillCart = this.props.money !== 0 && this.props.flowersInTheShop !== 0 ? this.props.cartState.push(identifyer) : this.props.cartState;
+        this.dispatchToStore(newAmountOfMoney, newNumberOfFlowersAvailable);
+        this.props.setNewCartState(this.props.cartState);
     };
 
 
     renderWarning = () => {
         let warning = this.props.money === 0 ? 'No money left on your account' :
-            (this.props.flowersInTheShop === 0 ? 'Sorry, no flowers left in our shop':'');
+            (this.props.flowersInTheShop === 0 ? 'Sorry, no flowers left in our shop' : '');
         return warning
     };
 
@@ -57,7 +60,7 @@ class Shop extends React.Component {
 
     renderCart = () => {
         return <h1 style={{color: '#616161'}}>This is Shop<IconButton aria-label="Cart">
-            <Badge badgeContent={this.props.cartState} color="secondary">
+            <Badge badgeContent={this.props.cartState.length} color="secondary">
                 <ShoppingCartIcon/>
             </Badge>
         </IconButton></h1>
@@ -73,10 +76,10 @@ class Shop extends React.Component {
             }}>
         </Chip>
             <MenuList className='flowers-menu-list'>
-                {this.props.flowersTypes.map((item) => {
+                {this.props.flowersTypes.map((item, idx) => {
                     return <MenuItem
-                        onClick={this.handleAddFlower}
-                        key={item.id}>{item.name}<AddFlower style={{width: '20', height: '20'}}/>
+                        onClick={() => this.handleAddFlower({name: item.name})}
+                        key={idx}>{item.name}<AddFlower style={{width: '20', height: '20'}}/>
                     </MenuItem>
                 })}
             </MenuList></div>

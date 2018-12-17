@@ -19,8 +19,9 @@ export const setNewAccountState = (data) => ({
     type: MONEY_LEFT,
     data
 });
-export const plantFlower = () => ({
-    type: GROWING_fLOWER
+export const plantFlower = (data) => ({
+    type: GROWING_fLOWER,
+    data
 });
 export const killFlower = (idx) => ({
     type: KILL_FLOWER,

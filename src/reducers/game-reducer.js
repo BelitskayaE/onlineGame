@@ -8,7 +8,7 @@ const initialState = {
     money: data.money,
     flowersTypes: data.flowersTypes,
     flowersInTheShop: data.flowersInTheShop,
-    cartState: data.cartState,
+    cartState: [],
     growingFlowers: [],
 
 };
@@ -41,8 +41,8 @@ const gameReducer = (state = initialState, action) => {
                 };
             }
             case GROWING_fLOWER: {
-                const fl = [...state.growingFlowers];
-                fl.push({name: 'flower'});
+                const fl = state.growingFlowers.slice();
+                fl.push(action.data);
                 return {
                     ...state,
                     growingFlowers: fl

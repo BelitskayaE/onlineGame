@@ -2,22 +2,18 @@
   "money": 5,
   "flowersTypes": [
     {
-      "id": 1,
       "name": "Gartensia"
     },
     {
-      "id": 2,
       "name": "Tulip"
     },
     {
-      "id": 3,
       "name": "Rose"
     },
     {
-      "id": 4,
       "name": "Mimosa"
     }
   ],
   "flowersInTheShop": 10,
-  "cartState":0
+  "cartState": []
 }

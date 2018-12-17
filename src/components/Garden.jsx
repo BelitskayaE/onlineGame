@@ -22,26 +22,28 @@ class Garden extends React.Component {
 
 
     handlePlantFlower = () => {
-        let recountCart = this.props.cartState !== 0 ? this.props.cartState - 1 : this.props.cartState;
+        let flowerToPlant = this.props.cartState[this.props.cartState.length-1];
+        let recountCart = this.props.cartState.length !== 0 ? this.props.cartState.slice(0,this.props.cartState.length-1) : this.props.cartState;
         this.props.setNewCartState(recountCart);
-        let accessPlanting = this.props.cartState > 0 ? this.props.plantFlower() : 0;
+        let accessPlanting = this.props.cartState.length > 0 ? this.props.plantFlower(flowerToPlant) : 0;
         return accessPlanting
     };
     renderPlantedFlowers = () => {
         return this.props.growingFlowers.map((item, idx) => {
             let props = {
-                key: idx,
+                name:item.name,
                 killFlower: () => this.props.killFlower(idx)
 
             };
             return <div style={{margin: 5}}><Flower {...props}/>
+                <div>{item.name}</div>
             </div>
         })
     };
 
     renderFlowersCounter = () => {
         return <div className='flowers-counter'><Chip
-            avatar={<Avatar>{this.props.cartState}</Avatar>}
+            avatar={<Avatar>{this.props.cartState.length}</Avatar>}
             label="Flowers you have"
             variant="outlined"
             style={{
@@ -86,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
     setNewCartState: (value) => dispatch(setNewCartState(value)),
     setNewFlowersStateInTheShop: (value) => dispatch(setNewFlowersStateInTheShop(value)),
     setNewAccountState: (value) => dispatch(setNewAccountState(value)),
-    plantFlower: () => dispatch(plantFlower()),
+    plantFlower: (value) => dispatch(plantFlower(value)),
     killFlower: (idx) => dispatch(killFlower(idx)),
 });
 export default connect(
