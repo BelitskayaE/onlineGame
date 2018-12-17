@@ -48,6 +48,7 @@ class Garden extends React.Component {
             avatar={<Avatar>{this.props.cartState.length}</Avatar>}
             label="Flowers you have"
             variant="outlined"
+            className='chip'
             style={{
                 background: '#5799DE',
                 margin: 10

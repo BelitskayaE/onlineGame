@@ -13,6 +13,7 @@ import {
     setNewCartState,
     setNewFlowersStateInTheShop
 } from "../actions/game-actions";
+import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
 
 class Shop extends React.Component {
@@ -50,18 +51,26 @@ class Shop extends React.Component {
             avatar={<Avatar>{this.props.money + 'Kč'}</Avatar>}
             label="Your account"
             variant="outlined"
-            style={{
-                margin: 10,
-                position: 'absolute'
-            }}>
+            className='chip'
+            style={{position: 'absolute'}}
+        >
         </Chip>
     };
 
+    cartContent=(item)=>{
+        return item.map((item,idx)=>{
+            return <p key={idx}>{item.name}</p>
+        })
+    };
+
+
     renderCart = () => {
         return <h1 style={{color: '#616161'}}>This is Shop<IconButton aria-label="Cart">
-            <Badge badgeContent={this.props.cartState.length} color="secondary">
-                <ShoppingCartIcon/>
-            </Badge>
+            <Tooltip title={this.cartContent(this.props.cartState)}>
+                <Badge badgeContent={this.props.cartState.length} color="secondary">
+                    <ShoppingCartIcon/>
+                </Badge>
+            </Tooltip>
         </IconButton></h1>
     };
 
@@ -70,6 +79,7 @@ class Shop extends React.Component {
             avatar={<Avatar>{this.props.flowersInTheShop}</Avatar>}
             label="Flowers available"
             variant="outlined"
+            className='chip'
             style={{
                 background: '#5799DE',
             }}>
@@ -77,8 +87,8 @@ class Shop extends React.Component {
             <MenuList>
                 {this.props.flowersTypes.map((item, idx) => {
                     return <MenuItem className='flowers-menu-list'
-                        onClick={() => this.handleAddFlower({name: item.name})}
-                        key={idx}>{item.name}<AddFlower style={{width: '20', height: '20'}}/>
+                                     onClick={() => this.handleAddFlower({name: item.name})}
+                                     key={idx}>{item.name}<AddFlower style={{width: '20', height: '20'}}/>
                     </MenuItem>
                 })}
             </MenuList></div>

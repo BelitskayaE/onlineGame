@@ -23,3 +23,8 @@ svg{
     color:#FE2E2E;
     margin:5px
 }
+
+.chip{
+    margin: 10px;
+    color:#D5CFC4 !important;
+}
