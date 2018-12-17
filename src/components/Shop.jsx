@@ -22,11 +22,6 @@ export const cartContent = (item) => {
 };
 
 class Shop extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
 
     dispatchToStore = (newAmountOfMoney, newNumberOfFlowersAvailable) => {
         this.props.setNewAccountState(newAmountOfMoney);

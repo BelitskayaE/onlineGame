@@ -17,11 +17,6 @@ import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
 
 class Garden extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
 
     handlePlantFlower = () => {
         let flowerToPlant = this.props.cartState[this.props.cartState.length - 1];
@@ -37,7 +32,7 @@ class Garden extends React.Component {
                 killFlower: () => this.props.killFlower(idx)
 
             };
-            return <div style={{margin: 5, display: 'flex', alignItems: 'center'}}>
+            return <div key={idx} style={{margin: 5, display: 'flex', alignItems: 'center'}}>
                 <div>{item.name}</div>
                 <Flower {...props}/>
 
@@ -48,16 +43,16 @@ class Garden extends React.Component {
     renderFlowersCounter = () => {
         return <div className='flowers-counter'>
             <Tooltip title={cartContent(this.props.cartState)}>
-            <Chip
-                avatar={<Avatar>{this.props.cartState.length}</Avatar>}
-                label="Flowers you have"
-                variant="outlined"
-                className='chip'
-                style={{
-                    background: '#5799DE',
-                    margin: 10
-                }}>
-            </Chip>
+                <Chip
+                    avatar={<Avatar>{this.props.cartState.length}</Avatar>}
+                    label="Flowers you have"
+                    variant="outlined"
+                    className='chip'
+                    style={{
+                        background: '#5799DE',
+                        margin: 10
+                    }}>
+                </Chip>
             </Tooltip>
             <Button onClick={this.handlePlantFlower} variant="contained">
                 Plant flower

@@ -30,12 +30,6 @@ class Game extends React.Component {
         this.setState({value});
     };
 
-
-    handleChangeIndex = index => {
-        this.setState({value: index});
-    };
-
-
     render() {
         return (
             <div className='App'>
@@ -45,6 +39,7 @@ class Game extends React.Component {
                         indicatorColor="primary"
                         textColor="primary"
                         fullWidth
+                        value={this.state.value}
                     >
                         <Tab className='header-tab' label="Shop"/>
                         <Tab className='header-tab' label="Garden"/>
@@ -52,7 +47,6 @@ class Game extends React.Component {
                 </AppBar>
                 <SwipeableViews
                     index={this.state.value}
-                    onChangeIndex={this.handleChangeIndex}
                 >
                     <TabContainer><Shop/></TabContainer>
                     <TabContainer><Garden/></TabContainer>
