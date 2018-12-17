@@ -46,8 +46,8 @@ class Game extends React.Component {
                         textColor="primary"
                         fullWidth
                     >
-                        <Tab label="Shop"/>
-                        <Tab label="Garden"/>
+                        <Tab className='header-tab' label="Shop"/>
+                        <Tab className='header-tab' label="Garden"/>
                     </Tabs>
                 </AppBar>
                 <SwipeableViews

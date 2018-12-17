@@ -1,10 +1,5 @@
-.flowers {
-    color: rgba(251, 246, 236, 0.87);
-}
 
 .flowers-menu-list {
-    color: rgba(251, 246, 236, 0.87);
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column
+    color: rgba(251, 246, 236, 0.87) !important;
+
 }

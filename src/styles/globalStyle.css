@@ -1,7 +1,16 @@
-html{
-    color:#fff;
+.header-tab{
+    color:#D5CFC4 !important;
+    background:#252528 !important;
 }
 
+html{
+    background:#2e2e32 !important;
+    color:#D5CFC4 !important;
+}
+
+svg{
+    fill:#D5CFC4 !important;
+}
 .content{
     display: flex;
     flex-direction: column;
@@ -11,6 +20,6 @@ html{
 }
 
 .warning{
-    color:red;
+    color:#FE2E2E;
     margin:5px
 }

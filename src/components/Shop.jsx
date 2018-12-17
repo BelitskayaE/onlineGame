@@ -33,7 +33,6 @@ class Shop extends React.Component {
         if (this.props.money !== 0 && this.props.flowersInTheShop !== 0) {
             this.props.cartState.push(identifyer);
         }
-        //let fillCart = this.props.money !== 0 && this.props.flowersInTheShop !== 0 ? this.props.cartState.push(identifyer) : this.props.cartState;
         this.dispatchToStore(newAmountOfMoney, newNumberOfFlowersAvailable);
         this.props.setNewCartState(this.props.cartState);
     };
@@ -75,16 +74,15 @@ class Shop extends React.Component {
                 background: '#5799DE',
             }}>
         </Chip>
-            <MenuList className='flowers-menu-list'>
+            <MenuList>
                 {this.props.flowersTypes.map((item, idx) => {
-                    return <MenuItem
+                    return <MenuItem className='flowers-menu-list'
                         onClick={() => this.handleAddFlower({name: item.name})}
                         key={idx}>{item.name}<AddFlower style={{width: '20', height: '20'}}/>
                     </MenuItem>
                 })}
             </MenuList></div>
     };
-
 
     render() {
         return (

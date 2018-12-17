@@ -35,8 +35,10 @@ class Garden extends React.Component {
                 killFlower: () => this.props.killFlower(idx)
 
             };
-            return <div style={{margin: 5}}><Flower {...props}/>
+            return <div style={{margin: 5, display:'flex',alignItems:'center'}}>
                 <div>{item.name}</div>
+                <Flower {...props}/>
+
             </div>
         })
     };
@@ -66,7 +68,7 @@ class Garden extends React.Component {
             <div className='content'>
                 <p>Here you can plant and grow your flowers.</p>
                 {this.renderFlowersCounter()}
-                <div className='warning'>{this.props.cartState === 0? 'You have no flowers in the cart':''}</div>
+                <div className='warning'>{this.props.cartState.length === 0? 'You have no flowers in the cart':''}</div>
                 {this.renderGardenSquare()}
             </div>
 

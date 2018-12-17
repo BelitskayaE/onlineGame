@@ -22,6 +22,4 @@ ReactDOM.render(
 );
 
 
-
-
 serviceWorker.unregister();

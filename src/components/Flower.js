@@ -24,8 +24,9 @@ class Flower extends React.Component {
             counter: this.state.counter - 1
         });
     };
-    componentWillUnmount(){
-      clearInterval(this.state.timer);
+
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
     }
 
 
@@ -44,12 +45,13 @@ class Flower extends React.Component {
                 <Tooltip title={this.state.counter === 0 ? `${this.props.name} grew up well` : ''} placement="top">
                     <div>{this.flower()}</div>
                 </Tooltip>
-                {this.state.counter > 0 ? <div style={{color: '#fff'}}>({this.state.counter})</div> : ''}
-                <Tooltip title="Kill flower" placement="top">
-                    <IconButton onClick={this.props.killFlower} aria-label="Delete">
-                        <DeleteIcon fontSize="small"/>
-                    </IconButton>
-                </Tooltip>
+                {this.state.counter > 0 ? <div style={{color: '#fff'}}>({this.state.counter})</div> :
+                    <Tooltip title="Kill flower" placement="top">
+                        <IconButton onClick={this.props.killFlower} aria-label="Delete">
+                            <DeleteIcon fontSize="small"/>
+                        </IconButton>
+                    </Tooltip>}
+
             </div>
         );
     }
