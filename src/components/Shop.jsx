@@ -15,6 +15,11 @@ import {
 } from "../actions/game-actions";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
+export const cartContent = (item) => {
+    return item.map((item, idx) => {
+        return <p key={idx}>{item.name}</p>
+    })
+};
 
 class Shop extends React.Component {
     constructor(props) {
@@ -57,16 +62,10 @@ class Shop extends React.Component {
         </Chip>
     };
 
-    cartContent=(item)=>{
-        return item.map((item,idx)=>{
-            return <p key={idx}>{item.name}</p>
-        })
-    };
-
 
     renderCart = () => {
         return <h1 style={{color: '#616161'}}>This is Shop<IconButton aria-label="Cart">
-            <Tooltip title={this.cartContent(this.props.cartState)}>
+            <Tooltip title={cartContent(this.props.cartState)}>
                 <Badge badgeContent={this.props.cartState.length} color="secondary">
                     <ShoppingCartIcon/>
                 </Badge>

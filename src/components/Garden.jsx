@@ -12,6 +12,8 @@ import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import Flower from "./Flower";
 import Button from "@material-ui/core/es/Button/Button";
+import {cartContent} from "./Shop";
+import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
 
 class Garden extends React.Component {
@@ -22,8 +24,8 @@ class Garden extends React.Component {
 
 
     handlePlantFlower = () => {
-        let flowerToPlant = this.props.cartState[this.props.cartState.length-1];
-        let recountCart = this.props.cartState.length !== 0 ? this.props.cartState.slice(0,this.props.cartState.length-1) : this.props.cartState;
+        let flowerToPlant = this.props.cartState[this.props.cartState.length - 1];
+        let recountCart = this.props.cartState.length !== 0 ? this.props.cartState.slice(0, this.props.cartState.length - 1) : this.props.cartState;
         this.props.setNewCartState(recountCart);
         let accessPlanting = this.props.cartState.length > 0 ? this.props.plantFlower(flowerToPlant) : 0;
         return accessPlanting
@@ -31,11 +33,11 @@ class Garden extends React.Component {
     renderPlantedFlowers = () => {
         return this.props.growingFlowers.map((item, idx) => {
             let props = {
-                name:item.name,
+                name: item.name,
                 killFlower: () => this.props.killFlower(idx)
 
             };
-            return <div style={{margin: 5, display:'flex',alignItems:'center'}}>
+            return <div style={{margin: 5, display: 'flex', alignItems: 'center'}}>
                 <div>{item.name}</div>
                 <Flower {...props}/>
 
@@ -44,18 +46,22 @@ class Garden extends React.Component {
     };
 
     renderFlowersCounter = () => {
-        return <div className='flowers-counter'><Chip
-            avatar={<Avatar>{this.props.cartState.length}</Avatar>}
-            label="Flowers you have"
-            variant="outlined"
-            className='chip'
-            style={{
-                background: '#5799DE',
-                margin: 10
-            }}>
-        </Chip> <Button onClick={this.handlePlantFlower} variant="contained">
-            Plant flower
-        </Button></div>
+        return <div className='flowers-counter'>
+            <Tooltip title={cartContent(this.props.cartState)}>
+            <Chip
+                avatar={<Avatar>{this.props.cartState.length}</Avatar>}
+                label="Flowers you have"
+                variant="outlined"
+                className='chip'
+                style={{
+                    background: '#5799DE',
+                    margin: 10
+                }}>
+            </Chip>
+            </Tooltip>
+            <Button onClick={this.handlePlantFlower} variant="contained">
+                Plant flower
+            </Button></div>
     };
 
     renderGardenSquare = () => {
@@ -69,7 +75,8 @@ class Garden extends React.Component {
             <div className='content'>
                 <p>Here you can plant and grow your flowers.</p>
                 {this.renderFlowersCounter()}
-                <div className='warning'>{this.props.cartState.length === 0? 'You have no flowers in the cart':''}</div>
+                <div
+                    className='warning'>{this.props.cartState.length === 0 ? 'You have no flowers in the cart' : ''}</div>
                 {this.renderGardenSquare()}
             </div>
 
