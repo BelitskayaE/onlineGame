@@ -8,6 +8,7 @@ import Garden from "./Garden";
 import '../styles/globalStyle.css';
 import '../styles/shopStyles.css';
 import '../styles/gardenStyles.css';
+import Button from "@material-ui/core/es/Button/Button";
 
 function TabContainer({children}) {
     return (
@@ -28,6 +29,11 @@ class Game extends React.Component {
 
     handleChange = (event, value) => {
         this.setState({value});
+    };
+
+    handleRestartGame = () => {
+        window.localStorage.clear();
+        document.location.reload(true);
     };
 
     render() {
@@ -51,6 +57,7 @@ class Game extends React.Component {
                     <TabContainer><Shop/></TabContainer>
                     <TabContainer><Garden/></TabContainer>
                 </SwipeableViews>
+                <Button className='restart-game-button' onClick={this.handleRestartGame}>Restart game</Button>
             </div>
 
         );

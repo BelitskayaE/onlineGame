@@ -16,9 +16,12 @@ import {
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
 export const cartContent = (item) => {
-    return item.map((item, idx) => {
-        return <p key={idx}>{item.name}</p>
-    })
+    if( item.length >0 ) {
+        return item.map((item, idx) => {
+            return <p key={idx}>{item.name}</p>
+        })
+    }
+    else{return <p>Cart is empty</p>}
 };
 
 class Shop extends React.Component {

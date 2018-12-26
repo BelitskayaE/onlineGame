@@ -28,3 +28,9 @@ svg{
     margin: 10px;
     color:#D5CFC4 !important;
 }
+.restart-game-button{
+    background: #F5B139 !important;
+    position:absolute !important;
+    bottom:10% !important;
+    color:#fff !important;
+}
