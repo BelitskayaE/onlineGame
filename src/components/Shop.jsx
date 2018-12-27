@@ -16,12 +16,14 @@ import {
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
 export const cartContent = (item) => {
-    if( item.length >0 ) {
+    if (item.length > 0) {
         return item.map((item, idx) => {
             return <p key={idx}>{item.name}</p>
         })
     }
-    else{return <p>Cart is empty</p>}
+    else {
+        return 'Cart is empty'
+    }
 };
 
 class Shop extends React.Component {
@@ -35,10 +37,10 @@ class Shop extends React.Component {
         let newAmountOfMoney = this.props.money !== 0 ? (this.props.flowersInTheShop !== 0 ? this.props.money - 1 : this.props.money) : 0;
         let newNumberOfFlowersAvailable = this.props.money !== 0 ? (this.props.flowersInTheShop !== 0 ? this.props.flowersInTheShop - 1 : 0) : this.props.flowersInTheShop;
         if (this.props.money !== 0 && this.props.flowersInTheShop !== 0) {
-            this.props.cartState.push(identifyer);
+            this.props.setNewCartState(identifyer);
         }
         this.dispatchToStore(newAmountOfMoney, newNumberOfFlowersAvailable);
-        this.props.setNewCartState(this.props.cartState);
+
     };
 
 

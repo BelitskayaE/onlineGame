@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {
     killFlower,
-    plantFlower,
+    plantFlower, removeFromCart,
     setNewAccountState,
     setNewCartState,
     setNewFlowersStateInTheShop,
@@ -20,8 +20,11 @@ class Garden extends React.Component {
 
     handlePlantFlower = () => {
         let flowerToPlant = this.props.cartState[this.props.cartState.length - 1];
-        let recountCart = this.props.cartState.length !== 0 ? this.props.cartState.slice(0, this.props.cartState.length - 1) : this.props.cartState;
-        this.props.setNewCartState(recountCart);
+        if (this.props.cartState.length !== 0) {
+            this.props.removeFromCart()
+        } else {
+            return this.props.cartState
+        }
         let accessPlanting = this.props.cartState.length > 0 ? this.props.plantFlower(flowerToPlant) : 0;
         return accessPlanting
     };
@@ -95,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
     setNewAccountState: (value) => dispatch(setNewAccountState(value)),
     plantFlower: (value) => dispatch(plantFlower(value)),
     killFlower: (idx) => dispatch(killFlower(idx)),
+    removeFromCart: () => dispatch(removeFromCart())
 });
 export default connect(
     mapStateToProps,

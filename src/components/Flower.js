@@ -36,8 +36,10 @@ class Flower extends React.Component {
             case 'Rose':
                 return '#DF0101';
             case 'Mimosa':
-                return '#FFBF00'
+                return '#FFBF00';
+            default: return '#fff'
         }
+
     };
 
     flower = (x, y) => (
